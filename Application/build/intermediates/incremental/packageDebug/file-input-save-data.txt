@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Tue Oct 02 16:40:46 BDT 2018
+#Tue Oct 02 17:02:38 BDT 2018
 2.base=D\:\\BluetoothLeGatt\\Application\\build\\intermediates\\res\\resources-debug.ap_
 5.file=D\:\\BluetoothLeGatt\\Application\\build\\intermediates\\res\\resources-debug.ap_\\res\\menu\\main.xml
 5.set=ANDROID_RESOURCE
