@@ -76,7 +76,9 @@ public class DeviceScanActivity extends ListActivity {
     ParcelUuid pUuid2;
     private Handler mHandler;
     UUID uuids;
+    AdvertiseSettings settings;
     AdvertiseData data;
+    AdvertiseData advScanResponse;
     BluetoothGattService bluetoothGattService;
     BluetoothLeAdvertiser advertiser;
     AdvertiseCallback advertisingCallback;
@@ -148,7 +150,7 @@ public class DeviceScanActivity extends ListActivity {
                 .addServiceUuid( pUuid )
                 .build();
 
-        AdvertiseData advScanResponse = new AdvertiseData.Builder()
+         advScanResponse = new AdvertiseData.Builder()
                 .setIncludeDeviceName(true)
                 .build();
 
@@ -164,7 +166,7 @@ public class DeviceScanActivity extends ListActivity {
                 super.onStartFailure(errorCode);
             }
         };
-        AdvertiseSettings settings = new AdvertiseSettings.Builder()
+         settings = new AdvertiseSettings.Builder()
                 .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_BALANCED)
                 .setConnectable(true)
                 .setTimeout(0)
@@ -172,7 +174,7 @@ public class DeviceScanActivity extends ListActivity {
                 .build();
 
 
-        advertiser.startAdvertising( settings, data, advScanResponse,advertisingCallback );
+
     }
 
     @Override
@@ -185,6 +187,7 @@ public class DeviceScanActivity extends ListActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
+                    advertiser.startAdvertising( settings, data, advScanResponse,advertisingCallback );
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
