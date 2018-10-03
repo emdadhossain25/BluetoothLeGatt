@@ -250,7 +250,7 @@ public class DeviceControlActivity extends Activity {
         if (gattServices == null) return;
         String uuid = null;
         String unknownServiceString = getResources().getString(R.string.unknown_service);
-        String unknownCharaString = getResources().getString(R.string.unknown_characteristic);
+        String unknownCharaString = getResources().getString(R.string.unknown_characteriscs);
         ArrayList<HashMap<String, String>> gattServiceData = new ArrayList<HashMap<String, String>>();
         ArrayList<ArrayList<HashMap<String, String>>> gattCharacteristicData
                 = new ArrayList<ArrayList<HashMap<String, String>>>();

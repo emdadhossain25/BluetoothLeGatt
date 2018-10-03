@@ -86,6 +86,7 @@ public class DeviceScanActivity extends ListActivity {
 
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 10000;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,8 +121,8 @@ public class DeviceScanActivity extends ListActivity {
         bluetoothGattService = new BluetoothGattService(BluetoothLeService.SERVICE_UUID, 0);
         uuids = BluetoothLeService.SERVICE_UUID;
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        mBluetoothLeAdvertiser =mBluetoothAdapter.getBluetoothLeAdvertiser();
-        Log.e("uuid",""+uuids);
+        mBluetoothLeAdvertiser = mBluetoothAdapter.getBluetoothLeAdvertiser();
+        Log.e("uuid", "" + uuids);
         // Use this check to determine whether BLE is supported on the device.  Then you can
         // selectively disable BLE-related features.
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
@@ -144,17 +145,17 @@ public class DeviceScanActivity extends ListActivity {
 
         advertiser = BluetoothAdapter.getDefaultAdapter().getBluetoothLeAdvertiser();
 
-        pUuid = new ParcelUuid( UUID.fromString( getString( R.string.ble_uuid ) ) );
+        pUuid = new ParcelUuid(UUID.fromString(getString(R.string.ble_uuid)));
 
         data = new AdvertiseData.Builder()
-                .addServiceUuid( pUuid )
+                .addServiceUuid(pUuid)
                 .build();
 
-         advScanResponse = new AdvertiseData.Builder()
+        advScanResponse = new AdvertiseData.Builder()
                 .setIncludeDeviceName(true)
                 .build();
 
-         advertisingCallback = new AdvertiseCallback() {
+        advertisingCallback = new AdvertiseCallback() {
             @Override
             public void onStartSuccess(AdvertiseSettings settingsInEffect) {
                 super.onStartSuccess(settingsInEffect);
@@ -162,18 +163,20 @@ public class DeviceScanActivity extends ListActivity {
 
             @Override
             public void onStartFailure(int errorCode) {
-                Log.e( "BLE", "Advertising onStartFailure: " + errorCode );
+                Log.e("BLE", "Advertising onStartFailure: " + errorCode);
                 super.onStartFailure(errorCode);
             }
         };
-         settings = new AdvertiseSettings.Builder()
+        settings = new AdvertiseSettings.Builder()
                 .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_BALANCED)
                 .setConnectable(true)
                 .setTimeout(0)
                 .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_MEDIUM)
                 .build();
 
-
+            advertiser = BluetoothAdapter.getDefaultAdapter().getBluetoothLeAdvertiser();
+        if (advertiser != null)
+            advertiser.startAdvertising(settings, data, advScanResponse, advertisingCallback);
 
     }
 
@@ -187,7 +190,7 @@ public class DeviceScanActivity extends ListActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-                    advertiser.startAdvertising( settings, data, advScanResponse,advertisingCallback );
+
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -247,16 +250,29 @@ public class DeviceScanActivity extends ListActivity {
         mLeDeviceListAdapter = new LeDeviceListAdapter();
         setListAdapter(mLeDeviceListAdapter);
         scanLeDevice(true);
+        advertiser = BluetoothAdapter.getDefaultAdapter().getBluetoothLeAdvertiser();
+        if (advertiser != null)
+            advertiser.startAdvertising(settings, data, advScanResponse, advertisingCallback);
+        else
+            callingAdvertising();
+    }
+
+    private void callingAdvertising() {
+        advertiser = BluetoothAdapter.getDefaultAdapter().getBluetoothLeAdvertiser();
+        if (advertiser != null)
+            advertiser.startAdvertising(settings, data, advScanResponse, advertisingCallback);
+
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data2) {
         // User chose not to enable Bluetooth.
         if (requestCode == REQUEST_ENABLE_BT && resultCode == Activity.RESULT_CANCELED) {
             finish();
             return;
         }
-        super.onActivityResult(requestCode, resultCode, data);
+
+        super.onActivityResult(requestCode, resultCode, data2);
     }
 
     @Override
@@ -443,7 +459,6 @@ public class DeviceScanActivity extends ListActivity {
 //
 //        }
 //    };
-
 
 
 }
