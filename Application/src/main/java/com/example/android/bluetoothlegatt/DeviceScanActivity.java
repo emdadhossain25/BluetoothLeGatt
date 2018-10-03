@@ -92,13 +92,13 @@ public class DeviceScanActivity extends ListActivity {
         super.onCreate(savedInstanceState);
 
         if (ContextCompat.checkSelfPermission(DeviceScanActivity.this,
-                Manifest.permission.READ_CONTACTS)
+                Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
             // Permission is not granted
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(DeviceScanActivity.this,
-                    Manifest.permission.READ_CONTACTS)) {
+                    Manifest.permission.ACCESS_COARSE_LOCATION)) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.

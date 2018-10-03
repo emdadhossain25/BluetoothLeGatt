@@ -16,6 +16,7 @@
 
 package com.example.android.bluetoothlegatt;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
@@ -53,6 +54,7 @@ public class DeviceControlActivity extends Activity {
 
     private TextView mConnectionState;
     private TextView mDataField;
+    String data_read;
     private String mDeviceName;
     private String mDeviceAddress;
     private ExpandableListView mGattServicesList;
@@ -109,6 +111,7 @@ public class DeviceControlActivity extends Activity {
                 //displayGattServices(mBluetoothLeService.getSupportedGattServices());
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+                data_read= intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
             }
         }
     };
@@ -311,13 +314,16 @@ public class DeviceControlActivity extends Activity {
 
     public void onClickWrite(View v){
         if(mBluetoothLeService != null) {
-            mBluetoothLeService.writeCustomCharacteristic(0xAA);
+            mBluetoothLeService.writeCustomCharacteristic(1);
         }
     }
 
+    @SuppressLint("SetTextI18n")
     public void onClickRead(View v){
         if(mBluetoothLeService != null) {
             mBluetoothLeService.readCustomCharacteristic();
+           mDataField.setText(data_read="test");
+           Log.e("data_read",""+data_read);
         }
     }
 }

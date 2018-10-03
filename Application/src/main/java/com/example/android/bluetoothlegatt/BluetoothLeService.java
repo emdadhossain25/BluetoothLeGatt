@@ -341,7 +341,7 @@ public class BluetoothLeService extends Service {
         BluetoothGattCharacteristic mReadCharacteristic = mCustomService.getCharacteristic(UUID.fromString("DE49E140-17B4-4D46-AD7A-F57A22673A17"));
 //        BluetoothGattCharacteristic mReadCharacteristic = mCustomService.getCharacteristic(UUID.fromString("417D2ECD-E1F5-4945-A315-C5FC949C6248"));
         if(mBluetoothGatt.readCharacteristic(mReadCharacteristic) == false){
-            Log.w(TAG, "Failed to read characteristic");
+            Log.w(TAG, "Failed to read characteristic "+mReadCharacteristic.getStringValue(0));
         }
     }
 
